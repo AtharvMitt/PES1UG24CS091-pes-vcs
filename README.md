@@ -1,11 +1,11 @@
 # PES-VCS Lab Report
 
-**Course:** Operating Systems Lab
-**Assignment:** Building PES-VCS — A Version Control System from Scratch
-**Student Name:** Atharv Mittal
-**SRN:** PES1UG24CS091
-**Platform:** Ubuntu 22.04
-**Repository Name:** PES1UG24CS091-pes-vcs
+**Course:** Operating Systems Lab \n
+**Assignment:** Building PES-VCS — A Version Control System from Scratch \n
+**Student Name:** Atharv Mittal \n
+**SRN:** PES1UG24CS091 \n
+**Platform:** Ubuntu 22.04 \n
+**Repository Name:** PES1UG24CS091-pes-vcs \n
 
 ---
 
