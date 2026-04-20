@@ -91,7 +91,7 @@ make test_objects
 ./test_objects
 ```
 
-> Paste Screenshot Here
+![test_objects](screenshots/test_objects_output.png)
 
 ---
 
@@ -103,7 +103,7 @@ make test_objects
 find .pes/objects -type f
 ```
 
-> Paste Screenshot Here
+![Phase1_SS2](screenshots/Phase1_SS2.png)
 
 ---
 
@@ -135,7 +135,7 @@ make test_tree
 ./test_tree
 ```
 
-> Paste Screenshot Here
+![Phase2_SS1](screenshots/Phase2_SS1.png)
 
 ---
 
@@ -150,7 +150,7 @@ xxd .pes/objects/XX/YYYY... | head -20
 
 (Use actual object path)
 
-> Paste Screenshot Here
+![Phase2_SS2](screenshots/Phase2_SS2.png)
 
 ---
 
@@ -190,7 +190,7 @@ cat .pes/index
 ./pes status
 ```
 
-> Paste Screenshot Here
+![Phase3_SS1](screenshots/Phase3_SS1.png)
 
 ---
 
@@ -202,7 +202,7 @@ cat .pes/index
 cat .pes/index
 ```
 
-> Paste Screenshot Here
+![Phase3_SS2](screenshots/Phase3_SS2.png)
 
 ---
 
@@ -247,7 +247,7 @@ echo Bye > bye.txt
 ./pes log
 ```
 
-> Paste Screenshot Here
+![Phase4_SS1](screenshots/Phase4_SS1.png)
 
 ---
 
@@ -259,7 +259,7 @@ echo Bye > bye.txt
 find .pes -type f | sort
 ```
 
-> Paste Screenshot Here
+![Phase4_SS2](screenshots/Phase4_SS2.png)
 
 ---
 
@@ -272,7 +272,7 @@ cat .pes/refs/heads/main
 cat .pes/HEAD
 ```
 
-> Paste Screenshot Here
+![Phase4_SS3](screenshots/Phase4_SS3.png)
 
 ---
 
