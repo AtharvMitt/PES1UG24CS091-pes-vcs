@@ -23,6 +23,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <dirent.h>
+#include "pes.h"
+
+int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out);
 
 // ─── PROVIDED ────────────────────────────────────────────────────────────────
 
@@ -179,30 +182,29 @@ static int cmp_entries(const void *a, const void *b) {
 }
 
 int index_save(const Index *index) {
-    Index copy = *index;
-
-    qsort(copy.entries, copy.count, sizeof(IndexEntry), cmp_entries);
-
     FILE *fp = fopen(".pes/index.tmp", "w");
-    if (!fp) return -1;
+    if (!fp)
+        return -1;
 
-    for (int i = 0; i < copy.count; i++) {
+    for (int i = 0; i < index->count; i++) {
         char hex[HASH_HEX_SIZE + 1];
-        hash_to_hex(&copy.entries[i].hash, hex);
+        hash_to_hex(&index->entries[i].hash, hex);
 
         fprintf(fp, "%o %s %ld %u %s\n",
-                copy.entries[i].mode,
+                index->entries[i].mode,
                 hex,
-                copy.entries[i].mtime_sec,
-                copy.entries[i].size,
-                copy.entries[i].path);
+                index->entries[i].mtime_sec,
+                index->entries[i].size,
+                index->entries[i].path);
     }
 
     fflush(fp);
     fsync(fileno(fp));
     fclose(fp);
 
-    rename(".pes/index.tmp", INDEX_FILE);
+    if (rename(".pes/index.tmp", INDEX_FILE) != 0)
+        return -1;
+
     return 0;
 }
 
@@ -224,7 +226,7 @@ int index_add(Index *index, const char *path) {
     if (!fp)
         return -1;
 
-    uint8_t *buf = malloc(st.st_size);
+    uint8_t *buf = malloc(st.st_size ? st.st_size : 1);
     if (!buf) {
         fclose(fp);
         return -1;
@@ -235,7 +237,6 @@ int index_add(Index *index, const char *path) {
         free(buf);
         return -1;
     }
-
     fclose(fp);
 
     ObjectID id;
@@ -243,19 +244,23 @@ int index_add(Index *index, const char *path) {
         free(buf);
         return -1;
     }
-
     free(buf);
 
     IndexEntry *e = index_find(index, path);
-    if (!e) {
-        e = &index->entries[index->count++];
+
+    if (e == NULL) {
+        if (index->count >= MAX_INDEX_ENTRIES)
+            return -1;
+
+        e = &index->entries[index->count];
+        index->count++;
     }
 
     strcpy(e->path, path);
-    e->mode = get_file_mode(path);
+    e->mode = (st.st_mode & S_IXUSR) ? 0100755 : 0100644;
     e->hash = id;
     e->mtime_sec = st.st_mtime;
-    e->size = st.st_size;
+    e->size = (uint32_t)st.st_size;
 
     return index_save(index);
 }
