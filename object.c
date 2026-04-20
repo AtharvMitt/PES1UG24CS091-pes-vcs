@@ -114,6 +114,19 @@ int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out
         free(buf);
         return 0;
     }
+
+    char final_path[512];
+    object_path(id_out, final_path, sizeof(final_path));
+
+    char dir[512];
+    snprintf(dir, sizeof(dir), "%s", final_path);
+
+    char *slash = strrchr(dir, '/');
+    if (!slash) {
+        free(buf);
+        return -1;
+    }
+    *slash = '\0';
     (void)type; (void)data; (void)len; (void)id_out;
     return -1;
 }
