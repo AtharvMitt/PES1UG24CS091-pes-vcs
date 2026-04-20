@@ -330,32 +330,6 @@ Real Git avoids this using locks, temporary files, reflogs, and careful coordina
 
 ---
 
-# 10. Submission Checklist
-
-## Required Screenshots
-
-* [ ] Screenshot 1A – `./test_objects`
-* [ ] Screenshot 1B – `find .pes/objects -type f`
-* [ ] Screenshot 2A – `./test_tree`
-* [ ] Screenshot 2B – `xxd` raw tree object
-* [ ] Screenshot 3A – `pes init → add → status`
-* [ ] Screenshot 3B – `cat .pes/index`
-* [ ] Screenshot 4A – `pes log`
-* [ ] Screenshot 4B – `find .pes -type f | sort`
-* [ ] Screenshot 4C – `cat .pes/refs/heads/main` + `cat .pes/HEAD`
-* [ ] Final – `make test-integration`
-
----
-
-## Required Code Files
-
-* [ ] object.c
-* [ ] tree.c
-* [ ] index.c
-* [ ] commit.c
-
----
-
 ## Commit History Requirement
 
 Minimum **5 commits per phase** with clear messages.
@@ -368,11 +342,11 @@ git log --oneline --graph
 
 ---
 
-# 11. GitHub Repository Link
+# 10. GitHub Repository Link
 
 Paste your public GitHub repository link here:
 
-**Repository:** `https://github.com/YOUR_USERNAME/PES1UG24CS091-pes-vcs`
+**Repository:** `https://github.com/AtharvMitt/PES1UG24CS091-pes-vcs`
 
 ---
 
