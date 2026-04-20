@@ -142,6 +142,23 @@ int index_load(Index *index) {
         return 0;
     }
 
+    while (index->count < MAX_INDEX_ENTRIES) {
+        IndexEntry *e = &index->entries[index->count];
+        char hex[HASH_HEX_SIZE + 1];
+
+        if (fscanf(fp, "%o %64s %ld %u %255[^\n]\n",
+                   &e->mode,
+                   hex,
+                   &e->mtime_sec,
+                   &e->size,
+                   e->path) != 5) {
+            break;
+        }
+
+        hex_to_hash(hex, &e->hash);
+        index->count++;
+    }
+
     fclose(fp);
     return 0;
 }
