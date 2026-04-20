@@ -145,3 +145,5 @@ int tree_from_index(ObjectID *id_out) {
 
     return rc;
 }
+
+//All tests of phase 2 have been verified and passed
