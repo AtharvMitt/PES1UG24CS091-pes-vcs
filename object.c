@@ -127,8 +127,42 @@ int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out
         return -1;
     }
     *slash = '\0';
-    (void)type; (void)data; (void)len; (void)id_out;
-    return -1;
+    mkdir(OBJECTS_DIR, 0755);
+    mkdir(dir, 0755);
+
+    char temp_path[512];
+    snprintf(temp_path, sizeof(temp_path), "%s/tmpXXXXXX", dir);
+
+    int fd = mkstemp(temp_path);
+    if (fd < 0) {
+        free(buf);
+        return -1;
+    }
+
+    if (write(fd, buf, total) != (ssize_t)total) {
+        close(fd);
+        unlink(temp_path);
+        free(buf);
+        return -1;
+    }
+
+    fsync(fd);
+    close(fd);
+
+    if (rename(temp_path, final_path) != 0) {
+        unlink(temp_path);
+        free(buf);
+        return -1;
+    }
+
+    int dfd = open(dir, O_RDONLY);
+    if (dfd >= 0) {
+        fsync(dfd);
+        close(dfd);
+    }
+
+    free(buf);
+    return 0;
 }
 
 // Read an object from the store.
