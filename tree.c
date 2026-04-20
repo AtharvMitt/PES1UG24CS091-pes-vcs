@@ -137,6 +137,9 @@ int tree_from_index(ObjectID *id_out) {
 
     void *data = NULL;
     size_t len = 0;
+    if (tree_serialize(&tree, &data, &len) != 0)
+        return -1;
+
     (void)id_out;
     return -1;
 }
